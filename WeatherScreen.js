@@ -27,9 +27,7 @@ const WeatherScreen = () => {
 
   return (
     <View style={{ flex:1, backgroundColor: 'transparent' }}>
-        <View>
-            <Image style={{ height: width, width: width, position: 'absolute', top:0, left:0 }} source= {require("./ICONS/64x64/day/119.png")} />
-        </View>
+        
         <ScrollView style={{ flex:1 }}>
         <View>
 
@@ -37,6 +35,8 @@ const WeatherScreen = () => {
   <View >
       <Text style={[styles.center, styles.title]}>{data.location.name}</Text>
       <Text style={styles.center}>{data.location.region}</Text>
+      <Text style={[styles.center, styles.title]}>WEATHER: {data.current.temp_f}</Text>
+
   </View>
   
 
