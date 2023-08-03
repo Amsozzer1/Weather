@@ -1,19 +1,26 @@
 import React,{useEffect,useState} from "react";
-import { View, StyleSheet, Text,ScrollView,Dimensions,Image } from "react-native";
+import { View, StyleSheet, Text,ScrollView,Dimensions,Image,Card,TouchableOpacity } from "react-native";
 import {city} from "./SearchScreen.js";
+import ForecastData from "./ForecastData.js";
+import {ForecastDataOBJ,icon} from "./ForecastData.js";
 //import{Name} from "./WeatherScripts/Name.js";
 
 let width = Dimensions.get('window').width
-
+let height = Dimensions.get('window').height
+//let IconImgRoute = require("./ICONS"+icon);
 const WeatherScreen = () => {
+  ForecastData(city);
+    //console.log(ForecastDataOBJ.forecast);
     const [data, setData] = useState(null); // Assuming your data is an object or an array
-
+    console.log("./ICONS"+icon);
+    let IconImgRoute = require("./ICONS/64x64/day/302.png");
   // Your async function that fetches data
   const fetchData = async () => {
     try {
       const response = await fetch('http://api.weatherapi.com/v1/current.json?key=98f5b2c716714f4b9b581625231207&q='+city+'&aqi=no');
       const data = await response.json();
       setData(data); // Save the fetched data in the state
+      
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -27,15 +34,86 @@ const WeatherScreen = () => {
 
   return (
     <View style={{ flex:1, backgroundColor: 'transparent' }}>
-        
+        <View>
+            <Image style={{ height: height, width: width, position: 'absolute', top:0, left:0 }} source= {require("./ICONS/64x64/day/DAYbg1.jpg")} />
+        </View>
         <ScrollView style={{ flex:1 }}>
         <View>
 
 {data ? (
   <View >
-      <Text style={[styles.center, styles.title]}>{data.location.name}</Text>
+      <Text style={[styles.center, styles.title, ]}>{data.location.name}</Text>
+      <Text style={[styles.center, styles.WEATHER]}>{data.current.temp_f} F</Text>
       <Text style={styles.center}>{data.location.region}</Text>
-      <Text style={[styles.center, styles.title]}>WEATHER: {data.current.temp_f}</Text>
+      {/*Card 1*/}
+      <View style={styles.Cardcontainer}>
+        <View style= {{flexDirection:'row', }}>
+          <TouchableOpacity onPress={()=>{console.log("pressed");}}>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require(`./ICONS/64x64/day/302.png`)} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View>
+          </TouchableOpacity>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/176.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View><View style={{flexDirection:'column'}}>
+          <Image source= {require(`./ICONS/64x64/day/302.png`)} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View><View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 25, fontWeight:'bold'}}>  69°</Text>
+          </View>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 25, fontWeight:'bold'}}>  69°</Text>
+          </View>
+        </View>
+      </View>
+            {/*Card 2*/}
+            <View style={[styles.Cardcontainer, styles.card2]}>
+        <View style= {{flexDirection:'row', }}>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View><View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View><View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
+          </View>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 25, fontWeight:'bold'}}>  69°</Text>
+          </View>
+          <View style={{flexDirection:'column'}}>
+          <Image source= {require("./ICONS/64x64/day/113.png")} style={{width:40,height:40}}></Image>
+            <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
+            <Text style={{paddingEnd: 25, fontWeight:'bold'}}>  69°</Text>
+          </View>
+        </View>
+      </View>
+      
 
   </View>
   
@@ -53,7 +131,7 @@ const WeatherScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    BackGroungImg: {
+  BackGroungImg: {
         flex: 1,
         resizeMode: "cover",
         justifyContent: "center"
@@ -64,11 +142,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
-  title
-    : {
-        fontSize: 18,
-        color: 'white',
-        },
+  title:{
+
+    fontSize: 18,
+    color: 'white',
+    paddingTop:'15%',
+    
+  },
+  WEATHER:{
+    fontSize:32,
+    color:'white',
+    paddingTop:-200
+  },
+  Cardcontainer: {
+    backgroundColor: 'white',
+    borderRadius: 25,
+    padding: 16,
+    margin: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+    opacity: 0.5,
+    boxShadow: '0 0 20px rgba(0,0,0,0.15)',
+    height: 100,
+  },
+  Cardtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  Cardcontent: {
+    fontSize: 16,
+    
+  },
+  card2: {
+    height:200,
+  }
+
 
 });
 

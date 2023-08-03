@@ -12,19 +12,25 @@ import { MainStackNavigator } from "./MainNavigation.js";
 
 import {BottomTabNavigator} from "./TabNavigator.js";
 import { WeatherScreen } from "./WeatherScreen.js";
+import {HelpScreen} from "./HelpScreen.js";
 
 const Home = ({ navigation }) => {
   return (
 
         <ScrollView style= {{backgroundColor: 'lightblue' }} >
 
-<TouchableOpacity onPress={()=>{console.log("PRESSED");}}>
-<View style={{ display:'flex',justifyContent:'center',alignItems:'center'}}>
-<View style = {{height:150,width:300,backgroundColor:'lightyellow', borderRadius:25,top:'15%',display:'flex',justifyContent:'center',alignItems:'center'}}>
-<Image style={{height:50,width:50,borderRadius:50,position:'absolute',left:10}} source = {{uri:"https://media.licdn.com/dms/image/C5603AQHGSuP6AwTDkg/profile-displayphoto-shrink_800_800/0/1668055956618?e=1695254400&v=beta&t=DHQL0R8BJV2y5ZHbfB8TzdXyqzRARrVt-NwfjI9BJ4A"}}></Image>
-<Text style={{position:'relative',fontSize:20,fontWeight:'bold'}}>Ahmed M Sozzer</Text>
-<Text style={{fontSize:15,fontWeight:'bold',top:100,position:'absolute'}}>Software Engineer</Text>
+<TouchableOpacity onPress={()=>{navigation.navigate('Help')}}>
+<View style={styles.Cardcontainer}>
+      <Text style={styles.Cardtitle}>title</Text>
+      <Text style={styles.Cardcontent}>content</Text>
 </View>
+<View style={styles.Cardcontainer}>
+      <Text style={styles.Cardtitle}>title</Text>
+      <Text style={styles.Cardcontent}>content</Text>
+</View>
+<View style={styles.Cardcontainer}>
+      <Text style={styles.Cardtitle}>title</Text>
+      <Text style={styles.Cardcontent}>content</Text>
 </View>
 </TouchableOpacity>
 
@@ -116,6 +122,25 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginHorizontal: 8,
     },
+    Cardcontainer: {
+      backgroundColor: '#fff',
+      borderRadius: 25,
+      padding: 16,
+      margin: 8,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    Cardtitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 8,
+    },
+    Cardcontent: {
+      fontSize: 16,
+    },
   });
   
-export {Home};
+export default Home;

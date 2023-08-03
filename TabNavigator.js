@@ -4,8 +4,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { MainStackNavigator, ContactStackNavigator } from "./MainNavigation.js";
 import { Ionicons } from '@expo/vector-icons';
-import {MainScreen} from "./SearchScreen.js";
+import SearchScreen, {MainScreen} from "./SearchScreen.js";
 import {SettingsScreen} from "./SettingsScreen.js";
+import HelpScreen from "./HelpScreen.js";
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
@@ -37,7 +38,7 @@ const BottomTabNavigator = () => {
       })}
        >
         <Tab.Screen name="HomeScreen" component={MainStackNavigator} options={{ tabBarBadge: 3,headerShown:false, title: "Home"}} />
-        <Tab.Screen name="Search" component={MainScreen} options={{headerShown:true, title:"Search", headerPressOpacity:0}}/>
+        <Tab.Screen name="Search" component={SearchScreen} options={{headerShown:true, title:"Search", headerPressOpacity:0}}/>
         <Tab.Screen name="Settings" component={SettingsScreen}  options={{headerShown:true, title:"Settings"}}/>
   
       </Tab.Navigator>

@@ -4,6 +4,7 @@ import React, { useEffect, useState,Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 //import { MainScreen } from './SearchScreen.js';
 import {BottomTabNavigator} from "./TabNavigator.js";
+import {Home} from "./Home.js";
 
 
   export default function App() {
@@ -12,6 +13,7 @@ import {BottomTabNavigator} from "./TabNavigator.js";
     return (
       <NavigationContainer>
       {/*<MainScreen />*/}
+     
       
       <BottomTabNavigator />
     </NavigationContainer>

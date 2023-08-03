@@ -1,9 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import {Home} from "./Home.js";
+import Home from "./Home.js";
+//import {HelpScreen} from "./Home.js";
 import {About} from "./About.js";
 import {WeatherScreen} from "./WeatherScreen.js";
+import HelpScreen from "./HelpScreen.js";
 
 
 const Stack = createStackNavigator();
@@ -19,10 +21,13 @@ const MainStackNavigator = () => {
           headerBackTitle: "Back",
         }}
       >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="About" component={About} />
-        <Stack.Screen name="Weather" component={WeatherScreen} />
+        <Stack.Group>
+        <Stack.Screen name="Home" component={Home}  />
+        <Stack.Screen name="Help"  component={HelpScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="About" component={About} options={{headerShown: false}}/>
+        <Stack.Screen name="Weather" component={WeatherScreen} options={{headerShown: false}}/>
         
+        </Stack.Group>
       </Stack.Navigator>
     );
   }
