@@ -5,7 +5,7 @@ import Home from "./Home.js";
 //import {HelpScreen} from "./Home.js";
 import {About} from "./About.js";
 import {WeatherScreen} from "./WeatherScreen.js";
-import HelpScreen from "./HelpScreen.js";
+import ExampleAsyncStorage from "./HelpScreen.js";
 
 
 const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ const MainStackNavigator = () => {
       >
         <Stack.Group>
         <Stack.Screen name="Home" component={Home}  />
-        <Stack.Screen name="Help"  component={HelpScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="Help"  component={ExampleAsyncStorage} options={{headerShown: false}}/>
         <Stack.Screen name="About" component={About} options={{headerShown: false}}/>
         <Stack.Screen name="Weather" component={WeatherScreen} options={{headerShown: false}}/>
         

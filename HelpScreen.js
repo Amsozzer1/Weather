@@ -1,92 +1,55 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, ScrollView, FlatList, TouchableOpacity } from "react-native";
-import { SearchBar } from "react-native-elements";
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-let city = '';
-export default class HelpScreen extends React.Component {
-  state = {
-    search: "",
-    DATA: [],
+const ExampleAsyncStorage = () => {
+  const [inputText, setInputText] = useState('');
+  const [storedText, setStoredText] = useState('');
+
+  useEffect(() => {
+    // Load the stored text from AsyncStorage when the component mounts
+    loadStoredText();
+  }, []);
+
+  const saveData = async () => {
+    try {
+      // Save the inputText to AsyncStorage
+      await AsyncStorage.setItem('@MyApp:storedText', inputText);
+      // Update the storedText state
+      setStoredText(inputText);
+      // Clear the inputText state
+      setInputText('');
+      console.log('Data saved successfully.');
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
   };
-  
-  updateSearch = (search) => {
-    this.setState({ search });
+
+  const loadStoredText = async () => {
+    try {
+      // Load the stored text from AsyncStorage
+      const storedText = await AsyncStorage.getItem('@MyApp:storedText');
+      // Update the storedText state if there is data
+      if (storedText !== null) {
+        setStoredText(storedText);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
   };
 
-  updateDATA = () => {
-    fetch("http://api.weatherapi.com/v1/search.json?key=98f5b2c716714f4b9b581625231207&q=" + this.state.search)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ DATA: data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <TextInput
+        style={{ borderColor: 'gray', borderWidth: 1, padding: 10, width: 200 }}
+        onChangeText={(text) => setInputText(text)}
+        value={inputText}
+        placeholder="Type something..."
+      />
+      <Button title="Save" onPress={saveData} />
+      {storedText ? <Text>Stored Text: {storedText}</Text> : null}
+    </View>
+  );
+};
 
-  render() {
-    const { search } = this.state;
-
-    return (
-      <View style = {[styles.container]}>
-        <SearchBar
-          placeholder="Type Here..."
-          onChangeText={this.updateSearch}
-          value={search}
-          onSubmitEditing={this.updateDATA}
-          
-        />
-        
-
-          {/* Correct the syntax for FlatList */}
-          <FlatList
-            data={this.state.DATA}
-            renderItem={({ item }) => <Text style={styles.searchContainer} onPress={()=>{console.log(item.name);city = item.name;}}>{item.name}</Text>}
-            keyExtractor={(item) => item.id.toString()} // Make sure to convert the ID to a string
-            
-          />
-
-      </View>
-    );
-  }
-}
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-    },
-    headerText: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      marginTop: 20,
-    },
-    listItem: {
-      padding: 10,
-      fontSize: 18,
-      borderBottomWidth: 1,
-      borderBottomColor: '#ccc',
-      
-  
-    },
-    searchContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 8,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-      marginHorizontal: 10,
-      marginTop: 20,
-    },
-    input: {
-      flex: 1,
-      marginLeft: 10,
-    },
-    
-    
-  });
-  export {city};
+export default ExampleAsyncStorage;

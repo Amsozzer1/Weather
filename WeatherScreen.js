@@ -1,19 +1,37 @@
 import React,{useEffect,useState} from "react";
-import { View, StyleSheet, Text,ScrollView,Dimensions,Image,Card,TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text,ScrollView,Dimensions,Image,Card,TouchableOpacity,AsyncStorage } from "react-native";
 import {city} from "./SearchScreen.js";
 import ForecastData from "./ForecastData.js";
 import {ForecastDataOBJ,icon} from "./ForecastData.js";
+import { Current_Data } from "./WeatherScripts/ImportingAllData.js";
+import { Entypo } from '@expo/vector-icons';
 //import{Name} from "./WeatherScripts/Name.js";
 
 let width = Dimensions.get('window').width
 let height = Dimensions.get('window').height
 //let IconImgRoute = require("./ICONS"+icon);
 const WeatherScreen = () => {
+   // Call the function to fetch data and log the result
   ForecastData(city);
     //console.log(ForecastDataOBJ.forecast);
     const [data, setData] = useState(null); // Assuming your data is an object or an array
+    //const[currentWeather, setcurrentWeather] = useState(null);
     console.log("./ICONS"+icon);
-    let IconImgRoute = require("./ICONS/64x64/day/302.png");
+    
+
+    async function fetchDataAndLog() {
+      const data = await Current_Data(city);
+      //console.log(data);
+      //setcurrentWeather(data);
+  }
+  
+  fetchDataAndLog();
+  //console.log(currentWeather);
+
+
+
+
+  let IconImgRoute = require("./ICONS/64x64/day/302.png");
   // Your async function that fetches data
   const fetchData = async () => {
     try {
@@ -34,6 +52,7 @@ const WeatherScreen = () => {
 
   return (
     <View style={{ flex:1, backgroundColor: 'transparent' }}>
+
         <View>
             <Image style={{ height: height, width: width, position: 'absolute', top:0, left:0 }} source= {require("./ICONS/64x64/day/DAYbg1.jpg")} />
         </View>
@@ -42,14 +61,19 @@ const WeatherScreen = () => {
 
 {data ? (
   <View >
+    
+{/*<TouchableOpacity onPress={console.log('ADD PRESSED')}><Entypo name="add-to-list" size={30} color="black" style= {styles.Entypo_btn} /></TouchableOpacity>*/}
       <Text style={[styles.center, styles.title, ]}>{data.location.name}</Text>
       <Text style={[styles.center, styles.WEATHER]}>{data.current.temp_f} F</Text>
       <Text style={styles.center}>{data.location.region}</Text>
       {/*Card 1*/}
       <View style={styles.Cardcontainer}>
+        
         <View style= {{flexDirection:'row', }}>
-          <TouchableOpacity onPress={()=>{console.log("pressed");}}>
+          <TouchableOpacity onPress={()=>{console.log("pressed");
+}}>
           <View style={{flexDirection:'column'}}>
+           
           <Image source= {require(`./ICONS/64x64/day/302.png`)} style={{width:40,height:40}}></Image>
             <Text style={{paddingEnd: 20, fontWeight:'bold'}}>Today</Text>
             <Text style={{paddingEnd: 20, fontWeight:'bold'}}>  69°</Text>
@@ -179,6 +203,12 @@ const styles = StyleSheet.create({
   },
   card2: {
     height:200,
+  },
+  Entypo_btn:{
+    position:"absolute",
+    left:325,
+    top:50
+
   }
 
 
