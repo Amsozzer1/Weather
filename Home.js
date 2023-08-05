@@ -12,7 +12,8 @@ import { MainStackNavigator } from "./MainNavigation.js";
 
 import {BottomTabNavigator} from "./TabNavigator.js";
 import { WeatherScreen } from "./WeatherScreen.js";
-import {HelpScreen} from "./HelpScreen.js";
+import {ExampleAsyncStorage} from "./HelpScreen.js";
+
 
 const Home = ({ navigation }) => {
   return (
