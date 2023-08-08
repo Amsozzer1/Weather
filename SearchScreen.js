@@ -46,6 +46,7 @@ export default class SearchScreen extends React.Component {
             renderItem={({ item }) => <Text style={styles.searchContainer} onPress={()=>{city = item.name;setTimeout(() => {
               console.log("Delayed for 1 second.");
               this.props.navigation.navigate('Weather');
+              
             }, "1000");}}>{item.name}</Text>}
             keyExtractor={(item) => item.id.toString()} // Make sure to convert the ID to a string
             
