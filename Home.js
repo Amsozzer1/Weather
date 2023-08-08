@@ -1,45 +1,84 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TouchableOpacity, View,Image,ScrollView,FlatList,Switch } from 'react-native';
-import React, { useEffect, useState,Component } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ScrollView, FlatList, Switch } from 'react-native';
+import React, { useEffect, useState, Component } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { ListItem, SearchBar } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
-//import {DATA} from './CITIES.js';
-
-import { MainStackNavigator } from "./MainNavigation.js";
-
-import {BottomTabNavigator} from "./TabNavigator.js";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BottomTabNavigator } from "./TabNavigator.js";
 import { WeatherScreen } from "./WeatherScreen.js";
-import {ExampleAsyncStorage} from "./HelpScreen.js";
-
+import { ExampleAsyncStorage } from "./HelpScreen.js";
 
 const Home = ({ navigation }) => {
+  const [storedText, setStoredText] = useState('');
+  const [retrievedArray, setRetrievedArray] = useState([]);
+
+  useEffect(() => {
+    // Load the stored text and array from AsyncStorage when the component mounts
+    loadStoredData();
+  }, []);
+
+  const getArray = async (key) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      if (jsonValue !== null) {
+        const array = JSON.parse(jsonValue);
+        return array;
+      }
+    } catch (error) {
+      console.error('Error retrieving array:', error);
+    }
+  };
+
+  const loadStoredData = async () => {
+    try {
+      const storedText = await AsyncStorage.getItem('@MyApp:storedText');
+      if (storedText !== null) {
+        setStoredText(storedText);
+      }
+
+      const arrayKey = 'myArrayKey';
+      const retrievedArray = await getArray(arrayKey);
+      if (retrievedArray) {
+        setRetrievedArray(retrievedArray);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  };
+
   return (
-
-        <ScrollView style= {{backgroundColor: 'lightblue' }} >
-
-<TouchableOpacity onPress={()=>{navigation.navigate('Help')}}>
-<View style={styles.Cardcontainer}>
-      <Text style={styles.Cardtitle}>title</Text>
-      <Text style={styles.Cardcontent}>content</Text>
-</View>
-<View style={styles.Cardcontainer}>
-      <Text style={styles.Cardtitle}>title</Text>
-      <Text style={styles.Cardcontent}>content</Text>
-</View>
-<View style={styles.Cardcontainer}>
-      <Text style={styles.Cardtitle}>title</Text>
-      <Text style={styles.Cardcontent}>content</Text>
-</View>
-</TouchableOpacity>
-
-
-</ScrollView>
-
+    <ScrollView style={{ backgroundColor: 'lightblue' }}>
+      {retrievedArray.map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+            navigation.navigate('Help');
+          }}
+        >
+          <View style={styles.Cardcontainer}>
+            <Text style={styles.Cardtitle}>{item}</Text>
+            <Text style={styles.Cardcontent}>{item}</Text>
+          </View>
+        </TouchableOpacity>
+        
+      ))}
+      <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Help');
+      }}
+      >
+      <View style={styles.Cardcontainer}>
+            <Text style={styles.Cardtitle}>item</Text>
+            <Text style={styles.Cardcontent}>item</Text>
+          </View>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
+
 
 
 const styles = StyleSheet.create({
