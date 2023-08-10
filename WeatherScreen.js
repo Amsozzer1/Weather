@@ -7,7 +7,7 @@ import { Current_Data } from "./WeatherScripts/ImportingAllData.js";
 import { Entypo } from '@expo/vector-icons';
 //import{Name} from "./WeatherScripts/Name.js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { AddCity } from "./Home.js";
 
 let width = Dimensions.get('window').width
 let height = Dimensions.get('window').height
@@ -16,8 +16,12 @@ let height = Dimensions.get('window').height
 let SotredCities = ['Chicago'];
 //let IconImgRoute = require("./ICONS"+icon);
 const WeatherScreen = () => {
+
+
+  const [cityArray, setCityArray] = useState(['LAUDA']);
    // Call the function to fetch data and log the result
-  ForecastData(city);
+  //ForecastData(city);
+  //ForecastData(AddCity);
     //console.log(ForecastDataOBJ.forecast);
     const [data, setData] = useState(null); // Assuming your data is an object or an array
     //const[currentWeather, setcurrentWeather] = useState(null);
@@ -25,11 +29,17 @@ const WeatherScreen = () => {
     
 
     async function fetchDataAndLog() {
+      //const data = await Current_Data(city);
       const data = await Current_Data(city);
+      //console.log(data);
       //console.log(data);
       //setcurrentWeather(data);
       
   }
+  const addItem = () => {
+    // Create a new array with the new item and update the state
+    setCityArray([...cityArray, city]);
+  };
   
   fetchDataAndLog();
   //console.log(currentWeather);
@@ -42,6 +52,17 @@ const WeatherScreen = () => {
       console.error('Error saving array:', error);
     }
   };
+  /*
+  
+  */
+  // Save an array
+  /*
+  const retrievedArray = await getArray('myArrayKey');
+  console.log(retrievedArray);
+  */
+  
+  saveArray('CITIES', cityArray);
+
   const getArray = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
@@ -54,14 +75,22 @@ const WeatherScreen = () => {
     }
     console.log(array);
   };
-  // Save an array
-  /*
-  const retrievedArray = await getArray('myArrayKey');
-  console.log(retrievedArray);
-  */
-  
+  const loadStoredData = async () => {
+    try {
+      const storedText = await AsyncStorage.getItem('@MyApp:storedText');
+      
 
-
+      const arrayKey = 'CITIES';
+      const retrievedArray = await getArray(arrayKey);
+      if (retrievedArray) {
+        setCityArray(retrievedArray);
+      }
+      console.log(retrievedArray);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+    
+  };
 
   let IconImgRoute = require("./ICONS/64x64/day/302.png");
   // Your async function that fetches data
@@ -96,10 +125,10 @@ const WeatherScreen = () => {
   <TouchableOpacity
     onPress={() => {
       console.log('Pressed');
-      SotredCities.push(city);
+      addItem();
+      //SotredCities.push(city);
       saveArray('CitiesArray', SotredCities);
-       getArray('CitiesArray');
-      // Add your logic here
+      loadStoredData();
     }}
     style={styles.iconContainer}
   >
