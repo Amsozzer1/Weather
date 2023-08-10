@@ -10,7 +10,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BottomTabNavigator } from "./TabNavigator.js";
 import { WeatherScreen } from "./WeatherScreen.js";
 import { ExampleAsyncStorage } from "./HelpScreen.js";
+import { city } from './SearchScreen.js';
 
+let AddCity = '';
 const Home = ({ navigation }) => {
   const [storedText, setStoredText] = useState('');
   const [retrievedArray, setRetrievedArray] = useState([]);
@@ -47,6 +49,7 @@ const Home = ({ navigation }) => {
     } catch (error) {
       console.error('Error loading data:', error);
     }
+    console.log(retrievedArray);
   };
 
   return (
@@ -55,7 +58,9 @@ const Home = ({ navigation }) => {
         <TouchableOpacity
           key={index}
           onPress={() => {
-            navigation.navigate('Help');
+             AddCity = item;
+            navigation.navigate('Weather');
+
           }}
         >
           <View style={styles.Cardcontainer}>
@@ -184,3 +189,4 @@ const styles = StyleSheet.create({
   });
   
 export default Home;
+export {AddCity};
